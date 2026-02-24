@@ -14,6 +14,7 @@ export const ResumeCreator: React.FC = () => {
   });
 
   const [showTemplates, setShowTemplates] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState('std-1');
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
 
@@ -60,7 +61,11 @@ export const ResumeCreator: React.FC = () => {
             ← Volver al Editor
           </button>
         </div>
-        <TemplatesView />
+        <TemplatesView 
+          currentTemplate={selectedTemplate}
+          onSelectTemplate={setSelectedTemplate}
+          onBackToEditor={() => setShowTemplates(false)}
+        />
       </div>
     );
   }
@@ -181,7 +186,7 @@ export const ResumeCreator: React.FC = () => {
         <div className="lg:sticky lg:top-24 h-fit flex flex-col items-center" ref={containerRef}>
           <div 
             id="a4-resume-page"
-            className="bg-white shadow-2xl rounded-sm border border-slate-200 p-12 overflow-hidden origin-top-left"
+            className={`bg-white shadow-2xl rounded-sm border border-slate-200 p-12 overflow-hidden origin-top-left template-${selectedTemplate}`}
             style={{ 
               width: '794px', 
               height: '1123px',
