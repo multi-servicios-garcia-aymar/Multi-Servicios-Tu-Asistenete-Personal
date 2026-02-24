@@ -12,6 +12,31 @@
   }
 }
 
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #a4-resume-page, #a4-resume-page * {
+    visibility: visible;
+  }
+  #a4-resume-page {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: none !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    margin: 0 !important;
+    padding: 20mm !important; /* Adjust padding for print */
+    box-shadow: none !important;
+    border: none !important;
+  }
+  @page {
+    size: A4;
+    margin: 0;
+  }
+}
+
 .glass-card {
   @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-sm;
 }

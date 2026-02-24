@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FileText, Plus, Download, User, Briefcase, GraduationCap, Mail, Phone, MapPin } from 'lucide-react';
 import { motion } from 'motion/react';
 
@@ -10,6 +10,36 @@ export const ResumeCreator: React.FC = () => {
     location: '',
     profile: ''
   });
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const updateScale = () => {
+      if (containerRef.current) {
+        const containerWidth = containerRef.current.offsetWidth;
+        const targetWidth = 794; // A4 width in pixels at 96 DPI
+        const newScale = Math.min(containerWidth / targetWidth, 1);
+        setScale(newScale);
+      }
+    };
+
+    const observer = new ResizeObserver(updateScale);
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+    
+    updateScale();
+    window.addEventListener('resize', updateScale);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', updateScale);
+    };
+  }, []);
+
+  const handlePrint = () => {
+    window.print();
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -28,9 +58,9 @@ export const ResumeCreator: React.FC = () => {
           <h1 className="text-3xl font-bold text-slate-900">Creador de CV</h1>
           <p className="text-slate-500">Diseña tu hoja de vida profesional en minutos.</p>
         </div>
-        <button className="flex items-center gap-2 bg-indigo-600 text-white px-6 py-2.5 rounded-xl hover:bg-indigo-700 transition-all shadow-md hover:shadow-lg active:scale-95">
+        <button onClick={handlePrint} className="flex items-center gap-2 bg-indigo-600 text-white px-6 py-2.5 rounded-xl hover:bg-indigo-700 transition-all shadow-md hover:shadow-lg active:scale-95">
           <Download className="w-4 h-4" />
-          <span className="font-semibold">Exportar PDF</span>
+          <span className="font-semibold">Exportar PDF / Imprimir</span>
         </button>
       </header>
 
@@ -112,8 +142,17 @@ export const ResumeCreator: React.FC = () => {
         </div>
 
         {/* Preview Section */}
-        <div className="lg:sticky lg:top-24 h-fit">
-          <div className="bg-white aspect-[1/1.414] shadow-2xl rounded-sm border border-slate-200 p-8 md:p-12 overflow-hidden transform scale-100 origin-top">
+        <div className="lg:sticky lg:top-24 h-fit flex flex-col items-center" ref={containerRef}>
+          <div 
+            id="a4-resume-page"
+            className="bg-white shadow-2xl rounded-sm border border-slate-200 p-12 overflow-hidden origin-top-left"
+            style={{ 
+              width: '794px', 
+              height: '1123px',
+              transform: `scale(${scale})`,
+              marginBottom: `-${1123 * (1 - scale)}px` // Adjust margin to prevent extra space
+            }}
+          >
             <div className="border-b-2 border-slate-900 pb-6 mb-8">
               <h3 className="text-3xl font-bold uppercase tracking-widest text-slate-900 break-words">
                 {formData.name || 'Tu Nombre Aquí'}
