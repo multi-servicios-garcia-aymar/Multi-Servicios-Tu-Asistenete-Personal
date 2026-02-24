@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FileText, Plus, Download, User, Briefcase, GraduationCap, Mail, Phone, MapPin } from 'lucide-react';
+import { FileText, Plus, Download, User, Briefcase, GraduationCap, Mail, Phone, MapPin, LayoutTemplate } from 'lucide-react';
 import { motion } from 'motion/react';
+import { TemplatesView } from './TemplatesView';
 
 export const ResumeCreator: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ export const ResumeCreator: React.FC = () => {
     profile: ''
   });
 
+  const [showTemplates, setShowTemplates] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
 
@@ -47,6 +49,22 @@ export const ResumeCreator: React.FC = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  if (showTemplates) {
+    return (
+      <div className="relative">
+        <div className="absolute top-4 left-4 md:top-8 md:left-8 z-10">
+          <button 
+            onClick={() => setShowTemplates(false)}
+            className="flex items-center gap-2 text-slate-500 hover:text-indigo-600 transition-colors font-medium bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-slate-200 shadow-sm"
+          >
+            ← Volver al Editor
+          </button>
+        </div>
+        <TemplatesView />
+      </div>
+    );
+  }
+
   return (
     <motion.div 
       initial={{ opacity: 0 }}
@@ -59,10 +77,19 @@ export const ResumeCreator: React.FC = () => {
           <h1 className="text-3xl font-bold text-slate-900">Creador de CV</h1>
           <p className="text-slate-500">Diseña tu hoja de vida profesional en minutos.</p>
         </div>
-        <button onClick={handlePrint} className="flex items-center gap-2 bg-indigo-600 text-white px-6 py-2.5 rounded-xl hover:bg-indigo-700 transition-all shadow-md hover:shadow-lg active:scale-95">
-          <Download className="w-4 h-4" />
-          <span className="font-semibold">Exportar PDF / Imprimir</span>
-        </button>
+        <div className="flex items-center gap-3">
+          <button 
+            onClick={() => setShowTemplates(true)}
+            className="flex items-center gap-2 bg-white text-slate-700 border border-slate-200 px-6 py-2.5 rounded-xl hover:bg-slate-50 hover:border-indigo-300 hover:text-indigo-600 transition-all shadow-sm active:scale-95"
+          >
+            <LayoutTemplate className="w-4 h-4" />
+            <span className="font-semibold">Plantillas</span>
+          </button>
+          <button onClick={handlePrint} className="flex items-center gap-2 bg-indigo-600 text-white px-6 py-2.5 rounded-xl hover:bg-indigo-700 transition-all shadow-md hover:shadow-lg active:scale-95">
+            <Download className="w-4 h-4" />
+            <span className="font-semibold">Exportar PDF / Imprimir</span>
+          </button>
+        </div>
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
