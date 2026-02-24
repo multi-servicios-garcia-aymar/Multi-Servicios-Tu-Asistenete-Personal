@@ -23,7 +23,7 @@ const Dashboard = () => {
         className="mb-12 text-center md:text-left"
       >
         <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4 tracking-tight">
-          Bienvenido al Hub <span className="text-indigo-600">Empresarial</span>
+          Multi Servicios <span className="text-indigo-600">Tu Asistente Personal</span>
         </h1>
         <p className="text-lg text-slate-500 max-w-2xl">
           Selecciona una herramienta para comenzar. Todas nuestras aplicaciones están diseñadas para la máxima productividad.
@@ -60,7 +60,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
               <LayoutGrid className="w-5 h-5 text-white" />
             </div>
-            <span className="font-bold text-xl tracking-tight hidden sm:inline-block">KioskHub</span>
+            <span className="font-bold text-xl tracking-tight hidden sm:inline-block">Multi Servicios Tu Asistente Personal</span>
           </div>
 
           <div className="flex items-center gap-2 md:gap-4">
