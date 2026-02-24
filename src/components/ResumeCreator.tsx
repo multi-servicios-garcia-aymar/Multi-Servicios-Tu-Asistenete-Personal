@@ -5,6 +5,7 @@ import { motion } from 'motion/react';
 export const ResumeCreator: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
+    identityCard: '',
     email: '',
     phone: '',
     location: '',
@@ -79,6 +80,14 @@ export const ResumeCreator: React.FC = () => {
                 onChange={handleChange}
                 type="text" 
                 placeholder="Nombre Completo" 
+                className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition-all" 
+              />
+              <input 
+                name="identityCard"
+                value={formData.identityCard}
+                onChange={handleChange}
+                type="text" 
+                placeholder="Cédula de Identidad" 
                 className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition-all" 
               />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -157,6 +166,11 @@ export const ResumeCreator: React.FC = () => {
               <h3 className="text-3xl font-bold uppercase tracking-widest text-slate-900 break-words">
                 {formData.name || 'Tu Nombre Aquí'}
               </h3>
+              {formData.identityCard && (
+                <p className="text-sm text-slate-500 mt-1 font-medium tracking-wider">
+                  C.I: {formData.identityCard}
+                </p>
+              )}
               <div className="flex flex-wrap gap-x-6 gap-y-2 mt-4 text-[10px] md:text-xs text-slate-600 font-medium">
                 <span className="flex items-center gap-1.5"><Mail className="w-3.5 h-3.5 text-indigo-600" /> {formData.email || 'email@ejemplo.com'}</span>
                 <span className="flex items-center gap-1.5"><Phone className="w-3.5 h-3.5 text-indigo-600" /> {formData.phone || '+123 456 789'}</span>
